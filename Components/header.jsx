@@ -56,7 +56,11 @@ function Header() {
           <div className=" logocontainer">
             <Link to="/dashboard">
               {/* <img src={logo} alt="" className="logo" /> */}
-              <img src={rabbitdash} alt="" />
+              <img
+                src="\src\assets\killo-removebg-preview.png"
+                style={{ width: "120px" }}
+                alt=""
+              />
             </Link>
             <Button className="circle" onClick={() => clicktohidesidebar()}>
               <MdMenuOpen />

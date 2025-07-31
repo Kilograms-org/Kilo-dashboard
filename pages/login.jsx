@@ -17,7 +17,11 @@ function Login() {
       <div className="loginsection ">
         <div className="loginform">
           <Link to="https://www.kilograms.in" className="mb-3">
-            <img src="src\assets\d66278bc50feea307ba525f2d853ece6.png" alt="" />
+            <img
+              src="\src\assets\killo-removebg-preview.png"
+              style={{ width: "120px" }}
+              alt=""
+            />
           </Link>
 
           <div className="adminemail">

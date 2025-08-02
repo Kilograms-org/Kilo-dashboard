@@ -3,6 +3,7 @@ import { Mycontext } from "../src/App";
 import { useNavigate } from "react-router-dom";
 import { Link } from "react-router-dom";
 import { Button } from "@mui/material";
+import kilologo from "../src/assets/killo-removebg-preview.png";
 
 function Login() {
   const navigate = useNavigate();
@@ -17,11 +18,7 @@ function Login() {
       <div className="loginsection ">
         <div className="loginform">
           <Link to="https://www.kilograms.in" className="mb-3">
-            <img
-              src="\src\assets\killo-removebg-preview.png"
-              style={{ width: "120px" }}
-              alt=""
-            />
+            <img src={kilologo} style={{ width: "120px" }} alt="" />
           </Link>
 
           <div className="adminemail">

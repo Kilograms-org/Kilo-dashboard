@@ -147,23 +147,6 @@ function Sidebar() {
           </Button>
         </li>
       </ul>
-      <div
-        style={{
-          position: "absolute",
-          bottom: "5px",
-          padding: "1rem",
-        }}
-      >
-        <img
-          src="\src\assets\TAfT.gif"
-          alt="Bottom GIF"
-          style={{
-            maxWidth: "170px",
-            height: "auto",
-            width: "100%",
-          }}
-        />
-      </div>
     </div>
   );
 }

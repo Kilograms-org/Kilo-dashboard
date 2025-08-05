@@ -12,6 +12,7 @@
 import { Button } from "@mui/material";
 import axios from "axios";
 import { useState } from "react";
+import ProductReview from "../Components/ProductReview";
 
 function CreateProduct() {
   const [product, setproduct] = useState({
@@ -26,6 +27,7 @@ function CreateProduct() {
     categoryname: "",
     img: ["", "", ""],
   });
+  const [productcreated, setproductcreated] = useState();
 
   async function uploadproduct() {
     const {
@@ -66,10 +68,14 @@ function CreateProduct() {
         });
 
         alert("Product Added successfully");
+        setproductcreated(product);
       } catch (e) {
         console.log("there is some error adding objects ");
-        console.log(e);
+        console.log(e.response?.data || e.message);
         console.log(product);
+        alert(
+          "There is some error adding product maybe server is down ek baar inspect krke dekh le "
+        );
       }
     } else {
       alert("Kuch fill krna reh gaya ha dubara bhar details");
@@ -194,7 +200,7 @@ function CreateProduct() {
                 style={{ marginLeft: "10px" }}
               >
                 <option value="Beverage">Beverage</option>
-                <option value="Dairy Products ">Dairy Products</option>
+                <option value="Dairy Products">Dairy Products</option>
                 <option value="Electronics">Electronics</option>
                 <option value="Fashion">Fashion</option>
                 <option value="Fruits">Fruits</option>
@@ -210,11 +216,11 @@ function CreateProduct() {
               <select
                 id="Instock"
                 name="Instock"
-                value={product.Instock.toString()}
+                value={product.Instock}
                 onChange={handleChange}
               >
                 <option value="true">True</option>
-                <option value="false ">False</option>
+                <option value="false">False</option>
               </select>
             </div>
             <div className="W-100 d-flex">
@@ -271,7 +277,9 @@ function CreateProduct() {
 
             <Button onClick={() => uploadproduct()}>Create Product</Button>
           </div>
-          <div className="preview"></div>
+          <div className="preview">
+            {productcreated ? <ProductReview {...productcreated} /> : null}
+          </div>
         </div>
       </div>
     </div>

@@ -118,7 +118,7 @@ header {
   box-shadow: 3px 3px 10px rgba(0, 0, 0, 0.3);
 }
 .nosidebar {
-  display: none;
+  width: 0px;
 }
 
 @media (max-width: 1070px) {
@@ -130,7 +130,7 @@ header {
   }
   .rightdashboardcontainer {
     display: block;
-    width: calc(100% - 300px);
+    width: 100%;
     max-width: 100%;
     flex: 1;
   }
@@ -165,7 +165,7 @@ header {
 }
 
 .rightdashboardcontainer {
-  width: 80%;
+  width: 100%;
 
   padding-left: 10px;
   padding-right: 10px;

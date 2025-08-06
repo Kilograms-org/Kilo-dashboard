@@ -54,18 +54,21 @@ function CreateProduct() {
       product.producttype != ""
     ) {
       try {
-        const res = await axios.post("http://localhost:3000/product/create", {
-          img,
-          name,
-          price,
-          description,
-          brand,
-          producttype,
-          weight,
-          keyfeatures,
-          categoryname,
-          Instock,
-        });
+        const res = await axios.post(
+          "https://kilograms-backend.onrender.com/product/create",
+          {
+            img,
+            name,
+            price,
+            description,
+            brand,
+            producttype,
+            weight,
+            keyfeatures,
+            categoryname,
+            Instock,
+          }
+        );
 
         alert("Product Added successfully");
         setproductcreated(product);

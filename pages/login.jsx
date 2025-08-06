@@ -18,10 +18,13 @@ function Login() {
 
   async function checkusercred() {
     try {
-      const res = await axios.post("http://localhost:3000/admin/login", {
-        email: email,
-        password: password,
-      });
+      const res = await axios.post(
+        "https://kilograms-backend.onrender.com/admin/login",
+        {
+          email: email,
+          password: password,
+        }
+      );
 
       if (res.status == 200) {
         alert("Logged in Successfully!");

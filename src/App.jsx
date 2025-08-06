@@ -26,6 +26,8 @@ function App() {
     false,
   ]);
 
+  const [username, setusername] = useState("admin");
+
   const values = {
     islogin,
     setislogin,
@@ -33,6 +35,8 @@ function App() {
     setrightsidecomponent,
     hidesidebar,
     sethidesidebar,
+    username,
+    setusername,
   };
 
   return (
@@ -41,7 +45,11 @@ function App() {
         {islogin === false && <Header />}
         <Routes>
           <Route path="/" element={<Login />} />
-          <Route path="/dashboard" element={<Dashboard />} />
+          {username != "admin" ? (
+            <Route path="/dashboard" element={<Dashboard />} />
+          ) : (
+            <Route path="/" element={<Login />} />
+          )}
           <Route path="/dev" element={<Redirecttogithub />} />
         </Routes>
       </Mycontext.Provider>

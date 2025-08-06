@@ -26,7 +26,8 @@ import { Mycontext } from "../src/App";
 import { useContext } from "react";
 
 function Header() {
-  const { hidesidebar, sethidesidebar } = useContext(Mycontext);
+  const { hidesidebar, sethidesidebar, username, setusername } =
+    useContext(Mycontext);
   const [dialogueopen, setdialogueopen] = React.useState(false);
 
   const handledialogueClickOpen = () => {
@@ -141,6 +142,7 @@ function Header() {
                   <Button style={{ fontSize: "14px", color: "black" }}>
                     <Link
                       to="/"
+                      onClick={() => setusername("admin")}
                       style={{ textDecoration: "none", color: "black" }}
                     >
                       SignOut
@@ -161,7 +163,7 @@ function Header() {
                   cursor: "pointer",
                 }}
               >
-                ADMIN01
+                {username}
               </span>
             </div>
           </div>

@@ -1,4 +1,4 @@
-function ProductTable() {
+function ProductTable({ products }) {
   return (
     <>
       <div className="table-responsive">
@@ -15,336 +15,41 @@ function ProductTable() {
             </tr>
           </thead>
           <tbody>
-            <tr>
-              <td>1071056</td>
-              <td>
-                <div className="ordertableproductdetails">
-                  <div>
-                    <img
-                      src="https://s7ap1.scene7.com/is/image/itcportalprod/aashirvaad%20chakki?fmt=webp-alpha"
-                      alt=""
-                    />
+            {products.map((product, index) => (
+              <tr key={product._id}>
+                <td>{product._id}</td>
+                <td>
+                  <div className="ordertableproductdetails">
+                    <div>
+                      <img
+                        src={
+                          product.images?.[0] ||
+                          "https://via.placeholder.com/100"
+                        }
+                        alt="productimg"
+                      />
+                    </div>
+                    <div>
+                      <p
+                        style={{
+                          maxWidth: "100px",
+                          overflow: "hidden",
+                          whiteSpace: "nowrap",
+                          textOverflow: "ellipsis",
+                        }}
+                      >
+                        {product.name}
+                      </p>
+                    </div>
                   </div>
-                  <div>
-                    <p
-                      style={{
-                        maxWidth: "100px",
-                        overflow: "hidden",
-                        whiteSpace: "nowrap",
-                        textOverflow: "ellipsis",
-                      }}
-                    >
-                      Ashrivaad Atta
-                    </p>
-                  </div>
-                </div>
-              </td>
-              <td>Yes</td>
-              <td>799</td>
-              <td>Ashirvaad</td>
-              <td>Grocery</td>
-              <td>
-                Ashrivaad AttaAshrivaad AttaAshrivaad AttaAshrivaad
-                AttaAshrivaad AttaAshrivaad
-              </td>
-            </tr>
-            <tr>
-              <td>1071056</td>
-              <td>
-                <div className="ordertableproductdetails">
-                  <div>
-                    <img
-                      src="https://s7ap1.scene7.com/is/image/itcportalprod/aashirvaad%20chakki?fmt=webp-alpha"
-                      alt=""
-                    />
-                  </div>
-                  <div>
-                    <p
-                      style={{
-                        maxWidth: "100px",
-                        overflow: "hidden",
-                        whiteSpace: "nowrap",
-                        textOverflow: "ellipsis",
-                      }}
-                    >
-                      Ashrivaad Atta
-                    </p>
-                  </div>
-                </div>
-              </td>
-              <td>Yes</td>
-              <td>799</td>
-              <td>Ashirvaad</td>
-              <td>Grocery</td>
-              <td>
-                Ashrivaad AttaAshrivaad AttaAshrivaad AttaAshrivaad
-                AttaAshrivaad AttaAshrivaad
-              </td>
-            </tr>
-            <tr>
-              <td>1071056</td>
-              <td>
-                <div className="ordertableproductdetails">
-                  <div>
-                    <img
-                      src="https://s7ap1.scene7.com/is/image/itcportalprod/aashirvaad%20chakki?fmt=webp-alpha"
-                      alt=""
-                    />
-                  </div>
-                  <div>
-                    <p
-                      style={{
-                        maxWidth: "100px",
-                        overflow: "hidden",
-                        whiteSpace: "nowrap",
-                        textOverflow: "ellipsis",
-                      }}
-                    >
-                      Ashrivaad Atta
-                    </p>
-                  </div>
-                </div>
-              </td>
-              <td>Yes</td>
-              <td>799</td>
-              <td>Ashirvaad</td>
-              <td>Grocery</td>
-              <td>
-                Ashrivaad AttaAshrivaad AttaAshrivaad AttaAshrivaad
-                AttaAshrivaad AttaAshrivaad
-              </td>
-            </tr>
-            <tr>
-              <td>1071056</td>
-              <td>
-                <div className="ordertableproductdetails">
-                  <div>
-                    <img
-                      src="https://s7ap1.scene7.com/is/image/itcportalprod/aashirvaad%20chakki?fmt=webp-alpha"
-                      alt=""
-                    />
-                  </div>
-                  <div>
-                    <p
-                      style={{
-                        maxWidth: "100px",
-                        overflow: "hidden",
-                        whiteSpace: "nowrap",
-                        textOverflow: "ellipsis",
-                      }}
-                    >
-                      Ashrivaad Atta
-                    </p>
-                  </div>
-                </div>
-              </td>
-              <td>Yes</td>
-              <td>799</td>
-              <td>Ashirvaad</td>
-              <td>Grocery</td>
-              <td>
-                Ashrivaad AttaAshrivaad AttaAshrivaad AttaAshrivaad
-                AttaAshrivaad AttaAshrivaad
-              </td>
-            </tr>
-            <tr>
-              <td>1071056</td>
-              <td>
-                <div className="ordertableproductdetails">
-                  <div>
-                    <img
-                      src="https://s7ap1.scene7.com/is/image/itcportalprod/aashirvaad%20chakki?fmt=webp-alpha"
-                      alt=""
-                    />
-                  </div>
-                  <div>
-                    <p
-                      style={{
-                        maxWidth: "100px",
-                        overflow: "hidden",
-                        whiteSpace: "nowrap",
-                        textOverflow: "ellipsis",
-                      }}
-                    >
-                      Ashrivaad Atta
-                    </p>
-                  </div>
-                </div>
-              </td>
-              <td>Yes</td>
-              <td>799</td>
-              <td>Ashirvaad</td>
-              <td>Grocery</td>
-              <td>
-                Ashrivaad AttaAshrivaad AttaAshrivaad AttaAshrivaad
-                AttaAshrivaad AttaAshrivaad
-              </td>
-            </tr>
-            <tr>
-              <td>1071056</td>
-              <td>
-                <div className="ordertableproductdetails">
-                  <div>
-                    <img
-                      src="https://s7ap1.scene7.com/is/image/itcportalprod/aashirvaad%20chakki?fmt=webp-alpha"
-                      alt=""
-                    />
-                  </div>
-                  <div>
-                    <p
-                      style={{
-                        maxWidth: "100px",
-                        overflow: "hidden",
-                        whiteSpace: "nowrap",
-                        textOverflow: "ellipsis",
-                      }}
-                    >
-                      Ashrivaad Atta
-                    </p>
-                  </div>
-                </div>
-              </td>
-              <td>Yes</td>
-              <td>799</td>
-              <td>Ashirvaad</td>
-              <td>Grocery</td>
-              <td>
-                Ashrivaad AttaAshrivaad AttaAshrivaad AttaAshrivaad
-                AttaAshrivaad AttaAshrivaad
-              </td>
-            </tr>
-            <tr>
-              <td>1071056</td>
-              <td>
-                <div className="ordertableproductdetails">
-                  <div>
-                    <img
-                      src="https://s7ap1.scene7.com/is/image/itcportalprod/aashirvaad%20chakki?fmt=webp-alpha"
-                      alt=""
-                    />
-                  </div>
-                  <div>
-                    <p
-                      style={{
-                        maxWidth: "100px",
-                        overflow: "hidden",
-                        whiteSpace: "nowrap",
-                        textOverflow: "ellipsis",
-                      }}
-                    >
-                      Ashrivaad Atta
-                    </p>
-                  </div>
-                </div>
-              </td>
-              <td>Yes</td>
-              <td>799</td>
-              <td>Ashirvaad</td>
-              <td>Grocery</td>
-              <td>
-                Ashrivaad AttaAshrivaad AttaAshrivaad AttaAshrivaad
-                AttaAshrivaad AttaAshrivaad
-              </td>
-            </tr>
-            <tr>
-              <td>1071056</td>
-              <td>
-                <div className="ordertableproductdetails">
-                  <div>
-                    <img
-                      src="https://s7ap1.scene7.com/is/image/itcportalprod/aashirvaad%20chakki?fmt=webp-alpha"
-                      alt=""
-                    />
-                  </div>
-                  <div>
-                    <p
-                      style={{
-                        maxWidth: "100px",
-                        overflow: "hidden",
-                        whiteSpace: "nowrap",
-                        textOverflow: "ellipsis",
-                      }}
-                    >
-                      Ashrivaad Atta
-                    </p>
-                  </div>
-                </div>
-              </td>
-              <td>Yes</td>
-              <td>799</td>
-              <td>Ashirvaad</td>
-              <td>Grocery</td>
-              <td>
-                Ashrivaad AttaAshrivaad AttaAshrivaad AttaAshrivaad
-                AttaAshrivaad AttaAshrivaad
-              </td>
-            </tr>
-            <tr>
-              <td>1071056</td>
-              <td>
-                <div className="ordertableproductdetails">
-                  <div>
-                    <img
-                      src="https://s7ap1.scene7.com/is/image/itcportalprod/aashirvaad%20chakki?fmt=webp-alpha"
-                      alt=""
-                    />
-                  </div>
-                  <div>
-                    <p
-                      style={{
-                        maxWidth: "100px",
-                        overflow: "hidden",
-                        whiteSpace: "nowrap",
-                        textOverflow: "ellipsis",
-                      }}
-                    >
-                      Ashrivaad Atta
-                    </p>
-                  </div>
-                </div>
-              </td>
-              <td>Yes</td>
-              <td>799</td>
-              <td>Ashirvaad</td>
-              <td>Grocery</td>
-              <td>
-                Ashrivaad AttaAshrivaad AttaAshrivaad AttaAshrivaad
-                AttaAshrivaad AttaAshrivaad
-              </td>
-            </tr>
-            <tr>
-              <td>1071056</td>
-              <td>
-                <div className="ordertableproductdetails">
-                  <div>
-                    <img
-                      src="https://s7ap1.scene7.com/is/image/itcportalprod/aashirvaad%20chakki?fmt=webp-alpha"
-                      alt=""
-                    />
-                  </div>
-                  <div>
-                    <p
-                      style={{
-                        maxWidth: "100px",
-                        overflow: "hidden",
-                        whiteSpace: "nowrap",
-                        textOverflow: "ellipsis",
-                      }}
-                    >
-                      Ashrivaad Atta
-                    </p>
-                  </div>
-                </div>
-              </td>
-              <td>Yes</td>
-              <td>799</td>
-              <td>Ashirvaad</td>
-              <td>Grocery</td>
-              <td>
-                Ashrivaad AttaAshrivaad AttaAshrivaad AttaAshrivaad
-                AttaAshrivaad AttaAshrivaad
-              </td>
-            </tr>
+                </td>
+                <td>{product.Instock}</td>
+                <td>{product.price}</td>
+                <td>{product.brand}</td>
+                <td>{product.category}</td>
+                <td>{product.description}</td>
+              </tr>
+            ))}
           </tbody>
         </table>
       </div>

@@ -29,6 +29,7 @@ function Login() {
       if (res.status == 200) {
         alert("Logged in Successfully!");
         setusername(res.data.name);
+        localStorage.setItem("adminname", res.data.name);
         navigate("/dashboard");
       } else {
         alert(res.data.message);

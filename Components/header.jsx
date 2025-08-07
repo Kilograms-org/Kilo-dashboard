@@ -50,6 +50,11 @@ function Header() {
   function clicktohidesidebar() {
     sethidesidebar(!hidesidebar);
   }
+
+  function handlelogout() {
+    setusername("admin");
+    localStorage.setItem("adminname", "admin");
+  }
   return (
     <header>
       <div className=" container  ">
@@ -142,7 +147,7 @@ function Header() {
                   <Button style={{ fontSize: "14px", color: "black" }}>
                     <Link
                       to="/"
-                      onClick={() => setusername("admin")}
+                      onClick={() => handlelogout()}
                       style={{ textDecoration: "none", color: "black" }}
                     >
                       SignOut

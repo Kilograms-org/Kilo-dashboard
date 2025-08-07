@@ -15,6 +15,14 @@ export const Mycontext = createContext();
 function App() {
   const [islogin, setislogin] = useState(false);
   const [hidesidebar, sethidesidebar] = useState(true);
+  const [username, setusername] = useState(() => {
+    if (localStorage.getItem("adminname") === null) {
+      return "admin";
+    } else {
+      return localStorage.getItem("adminname");
+    }
+  });
+
   const [rightsidecomponent, setrightsidecomponent] = useState([
     true,
     false,
@@ -25,8 +33,6 @@ function App() {
     false,
     false,
   ]);
-
-  const [username, setusername] = useState("admin");
 
   const values = {
     islogin,

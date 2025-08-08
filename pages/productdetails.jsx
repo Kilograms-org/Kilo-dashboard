@@ -26,7 +26,7 @@ function ProductDetails() {
             res.data.product.map(async (prod) => {
               try {
                 const catres = await axios.get(
-                  `http://localhost:3000/category/${prod.category}`
+                  `https://kilograms-backend.onrender.com/category/${prod.category}`
                 );
                 return {
                   ...prod,

@@ -29,14 +29,20 @@ function ProductTable({ products }) {
                         alt="productimg"
                       />
                     </div>
-                    <div>
+                    <div
+                      style={{
+                        width: "50%",
+                        display: "flex",
+                        justifyContent: "left",
+                      }}
+                    >
                       <p
-                        style={{
-                          maxWidth: "100px",
-                          overflow: "hidden",
-                          whiteSpace: "nowrap",
-                          textOverflow: "ellipsis",
-                        }}
+                      // style={{
+                      //   maxWidth: "100px",
+                      //   overflow: "hidden",
+                      //   whiteSpace: "nowrap",
+                      //   textOverflow: "ellipsis",
+                      // }}
                       >
                         {product.name}
                       </p>
@@ -46,7 +52,7 @@ function ProductTable({ products }) {
                 <td>{product.Instock}</td>
                 <td>{product.price}</td>
                 <td>{product.brand}</td>
-                <td>{product.category}</td>
+                <td>{product.categoryname}</td>
                 <td>{product.description}</td>
               </tr>
             ))}

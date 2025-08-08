@@ -1,9 +1,10 @@
-import { useState } from "react";
+import { useContext, useState } from "react";
 import OrderTable from "./OrderTable/";
 import LineChart from "./salechart";
+import { Mycontext } from "../src/App";
 
 function Rightdashboardcontent() {
-  const [products, setproducts] = useState(10);
+  const { noofproducts } = useContext(Mycontext);
   const [users, setUsers] = useState(0);
   const [orders, setorders] = useState(0);
   const [revenue, setrevenue] = useState(0);
@@ -21,7 +22,7 @@ function Rightdashboardcontent() {
               Total Users : <b>{users}</b>
             </div>
             <div className="dashbox">
-              Total Products : <b>{products}</b>
+              Total Products : <b>{noofproducts}</b>
             </div>
             <div className="dashbox">
               Total Orders : <b>{orders}</b>

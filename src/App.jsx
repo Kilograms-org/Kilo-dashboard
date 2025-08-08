@@ -1,4 +1,4 @@
-import React from "react";
+import React, { use } from "react";
 import { BrowserRouter, Routes, Route } from "react-router-dom";
 import "bootstrap/dist/css/bootstrap.min.css";
 import Dashboard from "../pages/dashboard";
@@ -13,6 +13,7 @@ import ProductDetails from "../pages/productdetails";
 export const Mycontext = createContext();
 
 function App() {
+  const [noofproducts, setnoofproducts] = useState(0);
   const [islogin, setislogin] = useState(false);
   const [hidesidebar, sethidesidebar] = useState(true);
   const [username, setusername] = useState(() => {
@@ -43,6 +44,8 @@ function App() {
     sethidesidebar,
     username,
     setusername,
+    noofproducts,
+    setnoofproducts,
   };
 
   return (

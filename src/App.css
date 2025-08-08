@@ -378,8 +378,15 @@ tbody td {
   font-size: 15px;
   width: 100%;
   align-items: center;
-  justify-content: center;
+  justify-content: space-between !important;
   gap: 10px;
+}
+
+.ordertableproductdetails p {
+  max-width: 100px;
+  overflow: hidden;
+  white-space: nowrap;
+  text-overflow: ellipsis;
 }
 
 p {

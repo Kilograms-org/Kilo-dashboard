@@ -64,8 +64,8 @@ function ProductDetails() {
           </div>
           <div className="allproducts">
             <Searchbox text="Search Products by Product Id" />
-            {products.length == 0 ? (
-              <></>
+            {products.length == 1 ? (
+              <>Loading...</>
             ) : (
               <ProductTable products={products} />
             )}

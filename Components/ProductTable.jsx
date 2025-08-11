@@ -9,9 +9,10 @@ function ProductTable({ products }) {
               <th style={{ width: "20%" }}>Product</th>
               <th style={{ width: "10%" }}>In Stock</th>
               <th style={{ width: "8%" }}>Price</th>
+              <th style={{ width: "8%" }}>Mrp</th>
               <th style={{ width: "10%" }}>brand</th>
               <th style={{ width: "10%" }}>Category</th>
-              <th style={{ width: "32%" }}>ProductDetails</th>
+              <th style={{ width: "24%" }}>ProductDetails</th>
             </tr>
           </thead>
           <tbody>
@@ -51,6 +52,8 @@ function ProductTable({ products }) {
                 </td>
                 <td>{product.Instock}</td>
                 <td>{product.price}</td>
+                <td>{product.Mrp}</td>
+
                 <td>{product.brand}</td>
                 <td>{product.categoryname}</td>
                 <td>{product.description}</td>

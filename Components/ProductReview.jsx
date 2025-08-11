@@ -19,7 +19,10 @@ function ProductReview(props) {
           <b>Price</b> : {props.price} Rs
         </p>
         <p>
-          <b>Instock</b> : {props.Instock}
+          <b>Mrp</b> : {props.Mrp} Rs
+        </p>
+        <p className="text-danger">
+          <b>Discount</b> : {Math.floor((1 - props.price / props.Mrp) * 100)}%
         </p>
       </div>
       <div className="previewdetail">
@@ -28,6 +31,9 @@ function ProductReview(props) {
         </p>
         <p>
           <b>Brand</b> : {props.brand}
+        </p>
+        <p>
+          <b>Instock</b> : {props.Instock}
         </p>
       </div>
 

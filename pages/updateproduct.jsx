@@ -16,6 +16,7 @@ function UpdateProduct() {
     Instock: "",
     categoryname: "",
     img: ["", "", ""],
+    Mrp: 0,
   });
 
   async function updateallprodycts() {
@@ -32,6 +33,7 @@ function UpdateProduct() {
           keyfeatures: product.keyfeatures,
           Instock: product.Instock,
           categoryname: product.categoryname,
+          Mrp: product.Mrp,
         }
       );
 
@@ -54,7 +56,7 @@ function UpdateProduct() {
     const { name, value } = e.target;
     let updatedValue = value;
 
-    if (name === "price") {
+    if (name === "price" || name === "Mrp") {
       updatedValue = Number(value); // Convert price to number
     }
     setproduct((prev) => ({
@@ -123,6 +125,24 @@ function UpdateProduct() {
                 type="number"
                 name="price"
                 value={product.price}
+                onChange={(e) => handlechange(e)}
+                placeholder="Enter Price"
+                style={{
+                  paddingLeft: "15px",
+                  marginLeft: "5px",
+                  outline: "none",
+                  border: "none",
+                  borderBottom: "1px solid black",
+                }}
+              />
+            </div>
+
+            <div className="W-100 d-flex">
+              <h5>Mrp : </h5>
+              <input
+                type="number"
+                name="Mrp"
+                value={product.Mrp}
                 onChange={(e) => handlechange(e)}
                 placeholder="Enter Price"
                 style={{

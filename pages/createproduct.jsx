@@ -26,6 +26,7 @@ function CreateProduct() {
     Instock: "",
     categoryname: "",
     img: ["", "", ""],
+    Mrp: 0,
   });
   const [productcreated, setproductcreated] = useState();
 
@@ -41,6 +42,7 @@ function CreateProduct() {
       producttype,
       Instock,
       img,
+      Mrp,
     } = product;
 
     if (
@@ -67,6 +69,7 @@ function CreateProduct() {
             keyfeatures,
             categoryname,
             Instock,
+            Mrp,
           }
         );
 
@@ -90,7 +93,7 @@ function CreateProduct() {
     const { name, value } = e.target;
     let updatedValue = value;
 
-    if (name === "price") {
+    if (name === "price" || name === "Mrp") {
       updatedValue = Number(value); // Convert price to number
     }
     setproduct((prev) => ({
@@ -163,6 +166,23 @@ function CreateProduct() {
                 type="number"
                 placeholder="Enter Price"
                 value={product.price}
+                onChange={(e) => handleChange(e)}
+                style={{
+                  paddinLeft: "15px",
+                  marginLeft: "5px",
+                  outline: "none",
+                  border: "none",
+                  borderBottom: "1px solid black",
+                }}
+              />
+            </div>
+            <div className="W-100 d-flex">
+              <h5>Mrp : </h5>
+              <input
+                name="Mrp"
+                type="number"
+                placeholder="Enter Mrp"
+                value={product.Mrp}
                 onChange={(e) => handleChange(e)}
                 style={{
                   paddinLeft: "15px",

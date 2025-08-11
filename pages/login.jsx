@@ -6,17 +6,28 @@ import { Button, useScrollTrigger } from "@mui/material";
 import kilologo from "../src/assets/killo-removebg-preview.png";
 import axios from "axios";
 import { useState } from "react";
+
+function Showloggingline(props) {
+  return (
+    <p>
+      Logging you in {props.email.substring(0, props.email.indexOf("@"))}.
+      Please Wait...
+    </p>
+  );
+}
 function Login() {
   const navigate = useNavigate();
   const { islogin, setislogin, username, setusername } = useContext(Mycontext);
   const [email, setemail] = useState("");
   const [password, setpassword] = useState("");
+  const [showlogging, setshowlogging] = useState(false);
 
   useEffect(() => {
     setislogin(true);
   }, []);
 
   async function checkusercred() {
+    setshowlogging(true);
     try {
       const res = await axios.post(
         "https://kilograms-backend.onrender.com/admin/login",
@@ -30,6 +41,7 @@ function Login() {
         alert("Logged in Successfully!");
         setusername(res.data.name);
         localStorage.setItem("adminname", res.data.name);
+        setshowlogging(false);
         navigate("/dashboard");
       } else {
         alert(res.data.message);
@@ -74,6 +86,9 @@ function Login() {
               Login
             </Button>
           </Link>
+          <br />
+
+          {showlogging === true && <Showloggingline email={email} />}
         </div>
       </div>
     </section>

@@ -231,6 +231,7 @@ function CreateProduct() {
                 <option value="Personal Care">Personal Care</option>
                 <option value="Stationary">Stationary</option>
                 <option value="Hosehold">Hosehold</option>
+                <option value="Snacks">Snacks</option>
               </select>
             </div>
             <div className="W-100 d-flex">

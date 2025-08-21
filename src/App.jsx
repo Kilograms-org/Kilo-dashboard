@@ -9,6 +9,7 @@ import Redirecttogithub from "../Components/Redirecttogithub";
 import { useContext, createContext } from "react";
 import Login from "../pages/login.jsx";
 import ProductDetails from "../pages/productdetails";
+import ProductPreviewPage from "../pages/productpreview.jsx";
 
 export const Mycontext = createContext();
 

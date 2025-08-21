@@ -9,6 +9,7 @@ import OrderDetails from "./Orderdetails";
 import CreateProduct from "./createproduct";
 import DeleteProduct from "./deleteproduct";
 import UpdateProduct from "./updateproduct";
+import ProductPreviewPage from "./productpreview";
 
 function Dashboard() {
   const {

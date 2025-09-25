@@ -54,12 +54,12 @@ function App() {
         {islogin === false && <Header />}
         <Routes>
           <Route path="/" element={<Login />} />
+          <Route path="/dev" element={<Redirecttogithub />} />
           {username != "admin" ? (
             <Route path="/dashboard" element={<Dashboard />} />
           ) : (
             <Route path="/" element={<Login />} />
           )}
-          <Route path="/dev" element={<Redirecttogithub />} />
         </Routes>
       </Mycontext.Provider>
     </BrowserRouter>

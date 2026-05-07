@@ -1,14 +1,3 @@
-//name
-//images - 3
-// description
-// price
-// brand
-
-// producttype
-// weight
-// keyfeatures
-// category - select
-// Instock - true or false
 import { Button } from "@mui/material";
 import axios from "axios";
 import { useState } from "react";
@@ -27,6 +16,7 @@ function CreateProduct() {
     categoryname: "",
     img: ["", "", ""],
     Mrp: 0,
+    available_stock: 100,
   });
   const [productcreated, setproductcreated] = useState();
 
@@ -43,6 +33,7 @@ function CreateProduct() {
       Instock,
       img,
       Mrp,
+      available_stock,
     } = product;
 
     if (
@@ -57,7 +48,7 @@ function CreateProduct() {
     ) {
       try {
         const res = await axios.post(
-          "https://kilograms-backend.onrender.com/product/create",
+          "http://localhost:3000/product/create",
           {
             img,
             name,
@@ -70,6 +61,7 @@ function CreateProduct() {
             categoryname,
             Instock,
             Mrp,
+            available_stock,
           }
         );
 
@@ -79,12 +71,10 @@ function CreateProduct() {
         console.log("there is some error adding objects ");
         console.log(e.response?.data || e.message);
         console.log(product);
-        alert(
-          "There is some error adding product maybe server is down ek baar inspect krke dekh le "
-        );
+        alert("There is some error adding product");
       }
     } else {
-      alert("Kuch fill krna reh gaya ha dubara bhar details");
+      alert("Please fill in all required fields");
       console.log("Validation debug", product);
     }
   }
@@ -93,8 +83,8 @@ function CreateProduct() {
     const { name, value } = e.target;
     let updatedValue = value;
 
-    if (name === "price" || name === "Mrp") {
-      updatedValue = Number(value); // Convert price to number
+    if (name === "price" || name === "Mrp" || name === "available_stock") {
+      updatedValue = Number(value);
     }
     setproduct((prev) => ({
       ...prev,
@@ -104,9 +94,7 @@ function CreateProduct() {
 
   function handleImageChange(index, value) {
     const newarr = [...product.img];
-
     newarr[index] = value;
-
     setproduct((prev) => ({ ...prev, img: newarr }));
   }
 
@@ -118,189 +106,202 @@ function CreateProduct() {
 
       <div className="dashboardcontent">
         <div className="w-100 pinfo">
-          <div className="basicinfo">
-            <div className="W-100 d-flex">
-              <h5>Product Name : </h5>
-              <input
-                name="name"
-                value={product.name}
-                onChange={(e) => handleChange(e)}
-                type="text"
-                placeholder="Enter Name"
-                style={{
-                  paddinLeft: "15px",
-                  marginLeft: "5px",
-                  outline: "none",
-                  border: "none",
-                  borderBottom: "1px solid black",
-                }}
-              />
-            </div>
-            <div className="W-100 ">
-              <h5>Product Description : </h5>
-              <textarea
-                name="description"
-                style={{ width: "350px", outline: "none" }}
-                placeholder="Enter product description"
-                id=""
-                value={product.description}
-                onChange={(e) => handleChange(e)}
-              ></textarea>
-            </div>
-            <div className="W-100 ">
-              <h5>Image Urls : </h5>
-              {[0, 1, 2].map((index) => (
+          <div className="basicinfo create-product-form">
+            <div className="form-section">
+              <div className="form-section-title">Basic Information</div>
+
+              <div className="form-row">
+                <h5>Product Name :</h5>
                 <input
-                  key={index}
+                  name="name"
+                  value={product.name}
+                  onChange={handleChange}
                   type="text"
-                  placeholder={`Url ${index + 1}`}
-                  value={product.img[index]}
-                  onChange={(e) => handleImageChange(index, e.target.value)}
+                  placeholder="Enter Product Name"
+                  className="form-input"
                 />
-              ))}
-            </div>
-            <div className="W-100 d-flex">
-              <h5>Price : </h5>
-              <input
-                name="price"
-                type="number"
-                placeholder="Enter Price"
-                value={product.price}
-                onChange={(e) => handleChange(e)}
-                style={{
-                  paddinLeft: "15px",
-                  marginLeft: "5px",
-                  outline: "none",
-                  border: "none",
-                  borderBottom: "1px solid black",
-                }}
-              />
-            </div>
-            <div className="W-100 d-flex">
-              <h5>Mrp : </h5>
-              <input
-                name="Mrp"
-                type="number"
-                placeholder="Enter Mrp"
-                value={product.Mrp}
-                onChange={(e) => handleChange(e)}
-                style={{
-                  paddinLeft: "15px",
-                  marginLeft: "5px",
-                  outline: "none",
-                  border: "none",
-                  borderBottom: "1px solid black",
-                }}
-              />
+              </div>
+
+              <div className="form-row">
+                <h5>Product Description :</h5>
+                <textarea
+                  name="description"
+                  placeholder="Enter product description"
+                  value={product.description}
+                  onChange={handleChange}
+                  className="form-textarea"
+                ></textarea>
+              </div>
+
+              <div className="form-row">
+                <h5>Brand :</h5>
+                <input
+                  type="text"
+                  name="brand"
+                  value={product.brand}
+                  onChange={handleChange}
+                  placeholder="Enter Brand"
+                  className="form-input"
+                />
+              </div>
+
+              <div className="form-row">
+                <h5>Category :</h5>
+                <select
+                  name="categoryname"
+                  value={product.categoryname}
+                  onChange={handleChange}
+                  className="form-select"
+                >
+                  <option value="">Select Category</option>
+                  <option value="Beverage">🥤 Beverage</option>
+                  <option value="Dairy Products">🥛 Dairy Products</option>
+                  <option value="Electronics">📱 Electronics</option>
+                  <option value="Fashion">👕 Fashion</option>
+                  <option value="Fruits">🍎 Fruits</option>
+                  <option value="Grocery">🛒 Grocery</option>
+                  <option value="Personal Care">🧴 Personal Care</option>
+                  <option value="Stationary">📝 Stationary</option>
+                  <option value="Household">🏠 Household</option>
+                  <option value="Snacks">🍿 Snacks</option>
+                  <option value="Vegetables">🥦 Vegetables</option>
+                  <option value="Bakery">🍞 Bakery</option>
+                </select>
+              </div>
             </div>
 
-            <div className="W-100 d-flex">
-              <h5>Brand : </h5>
-              <input
-                type="text"
-                name="brand"
-                value={product.brand}
-                onChange={(e) => handleChange(e)}
-                placeholder="Enter Brand"
-                style={{
-                  paddinLeft: "15px",
-                  marginLeft: "5px",
-                  outline: "none",
-                  border: "none",
-                  borderBottom: "1px solid black",
-                }}
-              />
+            <div className="form-section">
+              <div className="form-section-title">Pricing Details</div>
+
+              <div className="form-row">
+                <h5>Price :</h5>
+                <input
+                  name="price"
+                  type="number"
+                  placeholder="Enter Price"
+                  value={product.price}
+                  onChange={handleChange}
+                  className="form-input"
+                />
+              </div>
+
+              <div className="form-row">
+                <h5>Mrp :</h5>
+                <input
+                  name="Mrp"
+                  type="number"
+                  placeholder="Enter MRP"
+                  value={product.Mrp}
+                  onChange={handleChange}
+                  className="form-input"
+                />
+              </div>
+
+              <div className="form-row">
+                <h5>Available Stock :</h5>
+                <input
+                  name="available_stock"
+                  type="number"
+                  placeholder="Enter Available Stock"
+                  value={product.available_stock}
+                  onChange={handleChange}
+                  min="0"
+                  className="form-input"
+                />
+              </div>
             </div>
 
-            <div className="W-100 d-flex">
-              <h5 for="category">Category : </h5>
+            <div className="form-section">
+              <div className="form-section-title">Product Details</div>
 
-              <select
-                id="category"
-                name="categoryname"
-                value={product.categoryname}
-                onChange={(e) => handleChange(e)}
-                style={{ marginLeft: "10px" }}
-              >
-                <option value="Beverage">Beverage</option>
-                <option value="Dairy Products">Dairy Products</option>
-                <option value="Electronics">Electronics</option>
-                <option value="Fashion">Fashion</option>
-                <option value="Fruits">Fruits</option>
-                <option value="Grocery">Grocery</option>
-                <option value="Personal Care">Personal Care</option>
-                <option value="Stationary">Stationary</option>
-                <option value="Hosehold">Hosehold</option>
-                <option value="Snacks">Snacks</option>
-              </select>
-            </div>
-            <div className="W-100 d-flex">
-              <h5 for="category">In Stock : </h5>
+              <div className="form-row">
+                <h5>Product Type :</h5>
+                <input
+                  type="text"
+                  name="producttype"
+                  placeholder="Enter Product Type"
+                  value={product.producttype}
+                  onChange={handleChange}
+                  className="form-input"
+                />
+              </div>
 
-              <select
-                id="Instock"
-                name="Instock"
-                value={product.Instock}
-                onChange={handleChange}
-              >
-                <option value="true">True</option>
-                <option value="false">False</option>
-              </select>
-            </div>
-            <div className="W-100 d-flex">
-              <h5>Product Type : </h5>
-              <input
-                type="text"
-                name="producttype"
-                placeholder="Enter Product Type"
-                value={product.producttype}
-                onChange={(e) => handleChange(e)}
-                style={{
-                  paddinLeft: "15px",
-                  marginLeft: "5px",
-                  outline: "none",
-                  border: "none",
-                  borderBottom: "1px solid black",
-                }}
-              />
-            </div>
-            <div className="W-100 d-flex">
-              <h5>Weight : </h5>
-              <input
-                name="weight"
-                type="text"
-                placeholder="Enter Product wt in Kg"
-                value={product.weight}
-                onChange={(e) => handleChange(e)}
-                style={{
-                  paddinLeft: "15px",
-                  marginLeft: "5px",
-                  outline: "none",
-                  border: "none",
-                  borderBottom: "1px solid black",
-                }}
-              />
-            </div>
-            <div className="W-100 d-flex">
-              <h5>Key Features : </h5>
-              <input
-                type="text"
-                name="keyfeatures"
-                placeholder="Enter Key features"
-                value={product.keyfeatures}
-                onChange={(e) => handleChange(e)}
-                style={{
-                  paddinLeft: "15px",
-                  marginLeft: "5px",
-                  outline: "none",
-                  border: "none",
-                  borderBottom: "1px solid black",
-                }}
-              />
+              <div className="form-row">
+                <h5>Weight :</h5>
+                <input
+                  name="weight"
+                  type="text"
+                  placeholder="Enter Product Weight (e.g., 1kg, 500g)"
+                  value={product.weight}
+                  onChange={handleChange}
+                  className="form-input"
+                />
+              </div>
+
+              <div className="form-row">
+                <h5>Key Features :</h5>
+                <input
+                  type="text"
+                  name="keyfeatures"
+                  placeholder="Enter Key Features"
+                  value={product.keyfeatures}
+                  onChange={handleChange}
+                  className="form-input"
+                />
+              </div>
+
+              <div className="form-row">
+                <h5>In Stock :</h5>
+                <div className="stock-toggle">
+                  <button
+                    type="button"
+                    className={`stock-btn in-stock ${product.Instock === "true" ? "active" : ""}`}
+                    onClick={() => setproduct((prev) => ({ ...prev, Instock: "true" }))}
+                  >
+                    ✅ In Stock
+                  </button>
+                  <button
+                    type="button"
+                    className={`stock-btn out-of-stock ${product.Instock === "false" ? "active" : ""}`}
+                    onClick={() => setproduct((prev) => ({ ...prev, Instock: "false" }))}
+                  >
+                    ❌ Out of Stock
+                  </button>
+                </div>
+              </div>
             </div>
 
-            <Button onClick={() => uploadproduct()}>Create Product</Button>
+            <div className="form-section">
+              <div className="form-section-title">Product Images</div>
+
+              <div className="image-upload-group">
+                {[0, 1, 2].map((index) => (
+                  <div key={index} className="image-input-wrapper">
+                    <input
+                      type="text"
+                      placeholder={`Image URL ${index + 1}`}
+                      value={product.img[index]}
+                      onChange={(e) => handleImageChange(index, e.target.value)}
+                      className="form-input"
+                    />
+                    {product.img[index] && (
+                      <img
+                        src={product.img[index]}
+                        alt={`Preview ${index + 1}`}
+                        className="image-preview show"
+                        onError={(e) => (e.target.style.display = "none")}
+                      />
+                    )}
+                  </div>
+                ))}
+              </div>
+            </div>
+
+            <Button onClick={uploadproduct} className="submit-button">
+              Create Product
+            </Button>
           </div>
+
           <div className="preview">
             {productcreated ? <ProductReview {...productcreated} /> : null}
           </div>

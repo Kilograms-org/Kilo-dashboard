@@ -1,11 +1,13 @@
 import { Button } from "@mui/material";
-import { useState } from "react";
+import { useState, useEffect } from "react";
+import { useParams } from "react-router-dom";
 import axios from "axios";
 import ProductReview from "../Components/ProductReview";
 function UpdateProduct() {
+  const { id } = useParams();
   const [productcreated, setproductcreated] = useState();
   const [product, setproduct] = useState({
-    id: "",
+    id: id || "",
     name: "",
     description: "",
     price: 0,
@@ -19,10 +21,43 @@ function UpdateProduct() {
     Mrp: 0,
   });
 
+  // Fetch product details if ID is provided in URL
+  useEffect(() => {
+    if (id) {
+      fetchProductDetails(id);
+    }
+  }, [id]);
+
+  const fetchProductDetails = async (productId) => {
+    try {
+      const res = await axios.get(`http://localhost:3000/product/${productId}`);
+      if (res.status === 200) {
+        const p = res.data;
+        setproduct({
+          id: productId,
+          name: p.name || "",
+          description: p.description || "",
+          price: p.price || 0,
+          brand: p.brand || "",
+          producttype: p.producttype || "",
+          weight: p.weight || "",
+          keyfeatures: p.keyfeatures || "",
+          Instock: p.Instock || "",
+          categoryname: p.category?.name || "",
+          img: p.images || ["", "", ""],
+          Mrp: p.Mrp || 0,
+        });
+      }
+    } catch (error) {
+      console.error("Error fetching product details:", error);
+      alert("Error fetching product details");
+    }
+  };
+
   async function updateallprodycts() {
     try {
       const res = await axios.put(
-        `https://kilograms-backend.onrender.com/product/update/${product.id}`,
+        `http://localhost:3000/product/update/${product.id}`,
         {
           name: product.name,
           description: product.description,
@@ -64,6 +99,13 @@ function UpdateProduct() {
       [name]: updatedValue,
     }));
   }
+
+  function handleImageChange(index, value) {
+    const newarr = [...product.img];
+    newarr[index] = value;
+    setproduct((prev) => ({ ...prev, img: newarr }));
+  }
+
   return (
     <div className="rightdashboardarea">
       <div className="dashboardwrappewr">
@@ -72,194 +114,201 @@ function UpdateProduct() {
 
       <div className="dashboardcontent">
         <div className="w-100 pinfo">
-          <div className="basicinfo">
-            <div className="W-100 d-flex">
-              <h5>Product Id : </h5>
-              <input
-                type="text"
-                name="id"
-                value={product.id}
-                onChange={(e) => handlechange(e)}
-                placeholder="Enter Product Id"
-                style={{
-                  paddingLeft: "15px",
-                  marginLeft: "5px",
-                  outline: "none",
-                  border: "none",
-                  borderBottom: "1px solid black",
-                }}
-              />
-            </div>
-            <div className="W-100 d-flex">
-              <h5>Product Name : </h5>
-              <input
-                type="text"
-                name="name"
-                value={product.name}
-                onChange={(e) => handlechange(e)}
-                placeholder="Enter Name"
-                style={{
-                  paddingLeft: "15px",
-                  marginLeft: "5px",
-                  outline: "none",
-                  border: "none",
-                  borderBottom: "1px solid black",
-                }}
-              />
-            </div>
-            <div className="W-100 ">
-              <h5>Product Description : </h5>
-              <textarea
-                name="description"
-                value={product.description}
-                onChange={(e) => handlechange(e)}
-                style={{ width: "350px", outline: "none" }}
-                placeholder="Enter product description"
-                id=""
-              ></textarea>
+          <div className="basicinfo create-product-form">
+            <div className="form-section">
+              <div className="form-section-title">Basic Information</div>
+
+              <div className="form-row">
+                <h5>Product Id :</h5>
+                <input
+                  type="text"
+                  name="id"
+                  value={product.id}
+                  onChange={(e) => handlechange(e)}
+                  placeholder="Enter Product Id"
+                  className="form-input"
+                />
+              </div>
+
+              <div className="form-row">
+                <h5>Product Name :</h5>
+                <input
+                  type="text"
+                  name="name"
+                  value={product.name}
+                  onChange={(e) => handlechange(e)}
+                  placeholder="Enter Product Name"
+                  className="form-input"
+                />
+              </div>
+
+              <div className="form-row">
+                <h5>Product Description :</h5>
+                <textarea
+                  name="description"
+                  value={product.description}
+                  onChange={(e) => handlechange(e)}
+                  placeholder="Enter product description"
+                  className="form-textarea"
+                ></textarea>
+              </div>
+
+              <div className="form-row">
+                <h5>Brand :</h5>
+                <input
+                  type="text"
+                  name="brand"
+                  value={product.brand}
+                  onChange={(e) => handlechange(e)}
+                  placeholder="Enter Brand"
+                  className="form-input"
+                />
+              </div>
+
+              <div className="form-row">
+                <h5>Category :</h5>
+                <select
+                  name="categoryname"
+                  value={product.categoryname}
+                  onChange={(e) => handlechange(e)}
+                  className="form-select"
+                >
+                  <option value="">Select Category</option>
+                  <option value="Beverage">🥤 Beverage</option>
+                  <option value="Dairy Products">🥛 Dairy Products</option>
+                  <option value="Electronics">📱 Electronics</option>
+                  <option value="Fashion">👕 Fashion</option>
+                  <option value="Fruits">🍎 Fruits</option>
+                  <option value="Grocery">🛒 Grocery</option>
+                  <option value="Personal Care">🧴 Personal Care</option>
+                  <option value="Stationary">📝 Stationary</option>
+                  <option value="Household">🏠 Household</option>
+                  <option value="Snacks">🍿 Snacks</option>
+                  <option value="Vegetables">🥦 Vegetables</option>
+                  <option value="Bakery">🍞 Bakery</option>
+                </select>
+              </div>
             </div>
 
-            <div className="W-100 d-flex">
-              <h5>Price : </h5>
-              <input
-                type="number"
-                name="price"
-                value={product.price}
-                onChange={(e) => handlechange(e)}
-                placeholder="Enter Price"
-                style={{
-                  paddingLeft: "15px",
-                  marginLeft: "5px",
-                  outline: "none",
-                  border: "none",
-                  borderBottom: "1px solid black",
-                }}
-              />
+            <div className="form-section">
+              <div className="form-section-title">Pricing Details</div>
+
+              <div className="form-row">
+                <h5>Price :</h5>
+                <input
+                  type="number"
+                  name="price"
+                  value={product.price}
+                  onChange={(e) => handlechange(e)}
+                  placeholder="Enter Price"
+                  className="form-input"
+                />
+              </div>
+
+              <div className="form-row">
+                <h5>Mrp :</h5>
+                <input
+                  type="number"
+                  name="Mrp"
+                  value={product.Mrp}
+                  onChange={(e) => handlechange(e)}
+                  placeholder="Enter MRP"
+                  className="form-input"
+                />
+              </div>
             </div>
 
-            <div className="W-100 d-flex">
-              <h5>Mrp : </h5>
-              <input
-                type="number"
-                name="Mrp"
-                value={product.Mrp}
-                onChange={(e) => handlechange(e)}
-                placeholder="Enter Price"
-                style={{
-                  paddingLeft: "15px",
-                  marginLeft: "5px",
-                  outline: "none",
-                  border: "none",
-                  borderBottom: "1px solid black",
-                }}
-              />
+            <div className="form-section">
+              <div className="form-section-title">Product Details</div>
+
+              <div className="form-row">
+                <h5>Product Type :</h5>
+                <input
+                  type="text"
+                  name="producttype"
+                  value={product.producttype}
+                  onChange={(e) => handlechange(e)}
+                  placeholder="Enter Product Type"
+                  className="form-input"
+                />
+              </div>
+
+              <div className="form-row">
+                <h5>Weight :</h5>
+                <input
+                  type="text"
+                  name="weight"
+                  value={product.weight}
+                  onChange={(e) => handlechange(e)}
+                  placeholder="Enter Product Weight (e.g., 1kg, 500g)"
+                  className="form-input"
+                />
+              </div>
+
+              <div className="form-row">
+                <h5>Key Features :</h5>
+                <input
+                  type="text"
+                  name="keyfeatures"
+                  value={product.keyfeatures}
+                  onChange={(e) => handlechange(e)}
+                  placeholder="Enter Key Features"
+                  className="form-input"
+                />
+              </div>
+
+              <div className="form-row">
+                <h5>In Stock :</h5>
+                <div className="stock-toggle">
+                  <button
+                    type="button"
+                    className={`stock-btn in-stock ${product.Instock === "true" ? "active" : ""}`}
+                    onClick={() => setproduct((prev) => ({ ...prev, Instock: "true" }))}
+                  >
+                    ✅ In Stock
+                  </button>
+                  <button
+                    type="button"
+                    className={`stock-btn out-of-stock ${product.Instock === "false" ? "active" : ""}`}
+                    onClick={() => setproduct((prev) => ({ ...prev, Instock: "false" }))}
+                  >
+                    ❌ Out of Stock
+                  </button>
+                </div>
+              </div>
             </div>
 
-            <div className="W-100 d-flex">
-              <h5>Brand : </h5>
-              <input
-                type="text"
-                name="brand"
-                value={product.brand}
-                onChange={(e) => handlechange(e)}
-                placeholder="Enter Brand"
-                style={{
-                  paddingLeft: "15px",
-                  marginLeft: "5px",
-                  outline: "none",
-                  border: "none",
-                  borderBottom: "1px solid black",
-                }}
-              />
+            <div className="form-section">
+              <div className="form-section-title">Product Images</div>
+
+              <div className="image-upload-group">
+                {[0, 1, 2].map((index) => (
+                  <div key={index} className="image-input-wrapper">
+                    <input
+                      type="text"
+                      placeholder={`Image URL ${index + 1}`}
+                      value={product.img[index]}
+                      onChange={(e) => handleImageChange(index, e.target.value)}
+                      className="form-input"
+                    />
+                    {product.img[index] && (
+                      <img
+                        src={product.img[index]}
+                        alt={`Preview ${index + 1}`}
+                        className="image-preview show"
+                        onError={(e) => (e.target.style.display = "none")}
+                      />
+                    )}
+                  </div>
+                ))}
+              </div>
             </div>
 
-            <div className="W-100 d-flex">
-              <h5 for="category">Category : </h5>
-
-              <select
-                id="category"
-                name="categoryname"
-                value={product.categoryname}
-                onChange={(e) => handlechange(e)}
-              >
-                <option value="Beverage">Beverage</option>
-                <option value="Dairy Products">Dairy Products</option>
-                <option value="Electronics">Electronics</option>
-                <option value="Fashion">Fashion</option>
-                <option value="Fruits">Fruits</option>
-                <option value="Grocery">Grocery</option>
-                <option value="Personal Care">Personal Care</option>
-                <option value="Stationary">Stationary</option>
-                <option value="Hosehold">Hosehold</option>
-                <option value="Snacks">Snacks</option>
-              </select>
-            </div>
-            <div className="W-100 d-flex">
-              <h5 for="category">In Stock : </h5>
-
-              <select
-                id="category"
-                name="Instock"
-                value={product.Instock}
-                onChange={(e) => handlechange(e)}
-              >
-                <option value="true">True</option>
-                <option value="false">False</option>
-              </select>
-            </div>
-            <div className="W-100 d-flex">
-              <h5>Product Type : </h5>
-              <input
-                type="text"
-                name="producttype"
-                value={product.producttype}
-                onChange={(e) => handlechange(e)}
-                placeholder="Enter Name"
-                style={{
-                  paddingLeft: "15px",
-                  marginLeft: "5px",
-                  outline: "none",
-                  border: "none",
-                  borderBottom: "1px solid black",
-                }}
-              />
-            </div>
-            <div className="W-100 d-flex">
-              <h5>Weight : </h5>
-              <input
-                type="text"
-                name="weight"
-                value={product.weight}
-                onChange={(e) => handlechange(e)}
-                placeholder="Enter Name"
-                style={{
-                  paddingLeft: "15px",
-                  marginLeft: "5px",
-                  outline: "none",
-                  border: "none",
-                  borderBottom: "1px solid black",
-                }}
-              />
-            </div>
-            <div className="W-100 d-flex">
-              <h5>Key Features : </h5>
-              <input
-                type="text"
-                name="keyfeatures"
-                value={product.keyfeatures}
-                onChange={(e) => handlechange(e)}
-                placeholder="Enter Name"
-                style={{
-                  paddingLeft: "15px",
-                  marginLeft: "5px",
-                  outline: "none",
-                  border: "none",
-                  borderBottom: "1px solid black",
-                }}
-              />
-            </div>
-            <Button onClick={() => updateallprodycts()}>Update Product</Button>
+            <Button onClick={() => updateallprodycts()} className="submit-button">
+              Update Product
+            </Button>
           </div>
+
           <div className="preview">
             {productcreated ? <ProductReview {...productcreated} /> : null}
           </div>

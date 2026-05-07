@@ -9,6 +9,7 @@ import Redirecttogithub from "../Components/Redirecttogithub";
 import { useContext, createContext } from "react";
 import Login from "../pages/login.jsx";
 import ProductDetails from "../pages/productdetails";
+import UpdateProduct from "../pages/updateproduct";
 
 export const Mycontext = createContext();
 
@@ -61,6 +62,7 @@ function App() {
             <Route path="/" element={<Login />} />
           )}
           <Route path="/dev" element={<Redirecttogithub />} />
+          <Route path="/updateproduct/:id" element={<UpdateProduct />} />
         </Routes>
       </Mycontext.Provider>
     </BrowserRouter>

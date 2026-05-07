@@ -5,19 +5,27 @@ function DeleteProduct() {
   const [productid, setproductid] = useState("");
 
   async function deleteProduct() {
+    if (!productid) {
+      alert("Please enter a Product Id");
+      return;
+    }
+    if (!window.confirm(`Are you sure you want to delete product with ID: ${productid}?`)) {
+      return;
+    }
     try {
       const res = await axios.delete(
-        `https://kilograms-backend.onrender.com/product/delete/${productid}`
+        `http://localhost:3000/product/delete/${productid}`
       );
       if (res.status === 200) {
-        alert("product deleted successfully");
+        alert("Product deleted successfully");
+        setproductid("");
       } else {
-        alert("error : " + res.data.message);
+        alert("Error: " + res.data.message);
       }
     } catch (e) {
       console.log(e);
       alert(
-        "there is some error with serve ping admin! he will resolve it once he wakes up"
+        "There is some error with server. Please check the console for details."
       );
     }
   }
@@ -29,26 +37,26 @@ function DeleteProduct() {
 
       <div className="dashboardcontent">
         <div className="w-100 pinfo">
-          <div className="basicinfo">
-            <div className="W-100 d-flex">
-              <h5>Product Id : </h5>
-              <input
-                type="text"
-                name="productid"
-                value={productid}
-                placeholder="Enter Product Id"
-                onChange={(e) => setproductid(e.target.value)}
-                style={{
-                  paddinLeft: "15px",
-                  marginLeft: "5px",
-                  outline: "none",
-                  border: "none",
-                  borderBottom: "1px solid black",
-                }}
-              />
-            </div>
+          <div className="basicinfo create-product-form">
+            <div className="form-section">
+              <div className="form-section-title">Delete Product</div>
 
-            <Button onClick={() => deleteProduct()}>Delete Product</Button>
+              <div className="form-row">
+                <h5>Product Id :</h5>
+                <input
+                  type="text"
+                  name="productid"
+                  value={productid}
+                  placeholder="Enter Product Id"
+                  onChange={(e) => setproductid(e.target.value)}
+                  className="form-input"
+                />
+              </div>
+
+              <Button onClick={() => deleteProduct()} className="submit-button delete-button">
+                Delete Product
+              </Button>
+            </div>
           </div>
         </div>
       </div>

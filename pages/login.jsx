@@ -30,7 +30,7 @@ function Login() {
     setshowlogging(true);
     try {
       const res = await axios.post(
-        "https://kilograms-backend.onrender.com/admin/login",
+        "http://localhost:3000/admin/login",
         {
           email: email,
           password: password,

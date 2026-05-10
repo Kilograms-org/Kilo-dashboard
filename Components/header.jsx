@@ -16,6 +16,7 @@ import React from "react";
 import Box from "@mui/material/Box";
 import { useState, useEffect } from "react";
 import axios from "axios";
+import API_BASE from "../src/api.js";
 
 import { Mycontext } from "../src/App";
 import { useContext } from "react";
@@ -26,7 +27,7 @@ function Header() {
   const [logoUrl, setLogoUrl] = useState(fallbackLogo);
 
   useEffect(() => {
-    axios.get("http://localhost:3000/admin/logo")
+    axios.get(`${API_BASE}/admin/logo`)
       .then(res => {
         if (res.data.logoUrl) {
           setLogoUrl(res.data.logoUrl);

@@ -2,6 +2,7 @@ import { useState, useEffect } from "react";
 import Searchbox from "../Components/searchbox";
 import UserTable from "../Components/UserTable";
 import axios from "axios";
+import API_BASE from "../src/api.js";
 import Button from "@mui/material/Button";
 
 function UserDetails() {
@@ -17,7 +18,7 @@ function UserDetails() {
 
   const fetchUsers = async () => {
     try {
-      const res = await axios.get("http://localhost:3000/user/all");
+      const res = await axios.get(`${API_BASE}/user/all`);
       if (res.status === 200) {
         const allUsers = res.data.users || [];
         setUsers(allUsers);
@@ -40,7 +41,7 @@ function UserDetails() {
       const adminKey = localStorage.getItem("adminToken") || "admin-secret-123";
 
       const res = await axios.put(
-        `http://localhost:3000/admin/user/${userId}/toggle-status`,
+        `${API_BASE}/admin/user/${userId}/toggle-status`,
         {},
         { headers: { "x-admin-key": adminKey } }
       );
@@ -60,7 +61,7 @@ function UserDetails() {
     setSearchLoading(true);
     try {
       const res = await axios.get(
-        "http://localhost:3000/user/search",
+        `${API_BASE}/user/search`,
         { params: { query } }
       );
       setDisplayedUsers(res.data.users || []);

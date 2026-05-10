@@ -2,6 +2,7 @@ import Searchbox from "../Components/searchbox";
 import ProductTable from "../Components/ProductTable";
 import { useContext, useEffect, useState } from "react";
 import axios from "axios";
+import API_BASE from "../src/api.js";
 import { Mycontext } from "../src/App";
 import Button from "@mui/material/Button";
 
@@ -19,7 +20,7 @@ function ProductDetails() {
       productList.map(async (prod) => {
         try {
           const catres = await axios.get(
-            `http://localhost:3000/category/${prod.category}`
+            `${API_BASE}/category/${prod.category}`
           );
           return {
             ...prod,
@@ -36,7 +37,7 @@ function ProductDetails() {
   const fetchProducts = async () => {
     try {
       const res = await axios.get(
-        "http://localhost:3000/product/all"
+        `${API_BASE}/product/all`
       );
       if (!res.data) {
         console.log("unable to retrieve products from db");
@@ -53,7 +54,7 @@ function ProductDetails() {
 
   const fetchCategories = async () => {
     try {
-      const res = await axios.get("http://localhost:3000/category/all");
+      const res = await axios.get(`${API_BASE}/category/all`);
       if (res.status === 200) {
         setcategories(res.data);
       }
@@ -77,7 +78,7 @@ function ProductDetails() {
     setselectedCategory(null);
     try {
       const res = await axios.get(
-        `http://localhost:3000/product/search`,
+        `${API_BASE}/product/search`,
         { params: { q: query } }
       );
       if (res.data.products && res.data.products.length > 0) {

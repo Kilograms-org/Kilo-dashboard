@@ -5,6 +5,7 @@ import { Link } from "react-router-dom";
 import { Button, useScrollTrigger } from "@mui/material";
 import kilologo from "../src/assets/killo-removebg-preview.png";
 import axios from "axios";
+import API_BASE from "../src/api.js";
 import { useState } from "react";
 
 function Showloggingline(props) {
@@ -30,7 +31,7 @@ function Login() {
     setshowlogging(true);
     try {
       const res = await axios.post(
-        "http://localhost:3000/admin/login",
+        `${API_BASE}/admin/login`,
         {
           email: email,
           password: password,

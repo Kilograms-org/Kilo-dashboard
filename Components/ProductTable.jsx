@@ -1,6 +1,7 @@
 import { useState } from "react";
 import { useNavigate } from "react-router-dom";
 import axios from "axios";
+import API_BASE from "../src/api.js";
 
 function ProductTable({ products, onStockUpdate }) {
   const navigate = useNavigate();
@@ -14,7 +15,7 @@ function ProductTable({ products, onStockUpdate }) {
   const handleToggleInstock = async (productId) => {
     if (!window.confirm("Change stock status?")) return;
     try {
-      const res = await axios.patch(`http://localhost:3000/product/toggle-instock/${productId}`);
+      const res = await axios.patch(`${API_BASE}/product/toggle-instock/${productId}`);
       if (res.status === 200) {
         alert(`Product is now ${res.data.product.Instock ? "In Stock" : "Out of Stock"}`);
         if (onStockUpdate) onStockUpdate();
@@ -30,7 +31,7 @@ function ProductTable({ products, onStockUpdate }) {
 
     try {
       const res = await axios.patch(
-        `http://localhost:3000/product/restock/${restockDialog.productId}`,
+        `${API_BASE}/product/restock/${restockDialog.productId}`,
         { quantity: restockDialog.quantity }
       );
 
@@ -50,7 +51,7 @@ function ProductTable({ products, onStockUpdate }) {
   const handleIgnore = async (productId) => {
     try {
       const res = await axios.patch(
-        `http://localhost:3000/product/set-stock/${productId}`,
+        `${API_BASE}/product/set-stock/${productId}`,
         { stock: 0 }
       );
 
@@ -74,7 +75,7 @@ function ProductTable({ products, onStockUpdate }) {
     }
 
     try {
-      const res = await axios.delete(`http://localhost:3000/product/delete/${productId}`);
+      const res = await axios.delete(`${API_BASE}/product/delete/${productId}`);
       if (res.status === 200) {
         alert("Product deleted successfully");
         if (onStockUpdate) onStockUpdate();

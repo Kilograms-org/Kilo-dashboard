@@ -2,6 +2,7 @@ import { Button } from "@mui/material";
 import { useState, useEffect } from "react";
 import { useParams } from "react-router-dom";
 import axios from "axios";
+import API_BASE from "../src/api.js";
 import ProductReview from "../Components/ProductReview";
 function UpdateProduct() {
   const { id } = useParams();
@@ -30,7 +31,7 @@ function UpdateProduct() {
 
   const fetchProductDetails = async (productId) => {
     try {
-      const res = await axios.get(`http://localhost:3000/product/${productId}`);
+      const res = await axios.get(`${API_BASE}/product/${productId}`);
       if (res.status === 200) {
         const p = res.data;
         setproduct({
@@ -57,7 +58,7 @@ function UpdateProduct() {
   async function updateallprodycts() {
     try {
       const res = await axios.put(
-        `http://localhost:3000/product/update/${product.id}`,
+        `${API_BASE}/product/update/${product.id}`,
         {
           name: product.name,
           description: product.description,

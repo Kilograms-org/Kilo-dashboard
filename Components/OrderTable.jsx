@@ -1,5 +1,6 @@
 import { useState } from "react";
 import axios from "axios";
+import API_BASE from "../src/api.js";
 
 function OrderTable({ orders, onStatusUpdate }) {
   const [localStatuses, setLocalStatuses] = useState({});
@@ -12,7 +13,7 @@ function OrderTable({ orders, onStatusUpdate }) {
     setUpdateResult(null);
     try {
       await axios.patch(
-        `http://localhost:3000/order/admin/status/${orderId}`,
+        `${API_BASE}/order/admin/status/${orderId}`,
         { status: newStatus }
       );
       setUpdateResult("success");

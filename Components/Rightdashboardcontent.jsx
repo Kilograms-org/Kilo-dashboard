@@ -1,5 +1,6 @@
 import { useContext, useState, useEffect, useCallback } from "react";
 import axios from "axios";
+import API_BASE from "../src/api.js";
 import OrderTable from "./OrderTable/";
 import LineChart from "./salechart";
 import { Mycontext } from "../src/App";
@@ -16,9 +17,9 @@ function Rightdashboardcontent() {
   const fetchData = useCallback(async () => {
     try {
       const [ordersRes, usersRes, statsRes] = await Promise.all([
-        axios.get("http://localhost:3000/order/all/admin"),
-        axios.get("http://localhost:3000/user/all/admin"),
-        axios.get("http://localhost:3000/order/stats/daily"),
+        axios.get(`${API_BASE}/order/all/admin`),
+        axios.get(`${API_BASE}/user/all/admin`),
+        axios.get(`${API_BASE}/order/stats/daily`),
       ]);
 
       const ordersData = ordersRes.data.orders || [];

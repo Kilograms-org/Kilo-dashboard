@@ -1,6 +1,7 @@
 import { Button } from "@mui/material";
 import { useState } from "react";
 import axios from "axios";
+import API_BASE from "../src/api.js";
 function DeleteProduct() {
   const [productid, setproductid] = useState("");
 
@@ -14,7 +15,7 @@ function DeleteProduct() {
     }
     try {
       const res = await axios.delete(
-        `http://localhost:3000/product/delete/${productid}`
+        `${API_BASE}/product/delete/${productid}`
       );
       if (res.status === 200) {
         alert("Product deleted successfully");

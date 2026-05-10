@@ -1,5 +1,6 @@
 import { Button } from "@mui/material";
 import axios from "axios";
+import API_BASE from "../src/api.js";
 import { useState } from "react";
 import ProductReview from "../Components/ProductReview";
 
@@ -48,7 +49,7 @@ function CreateProduct() {
     ) {
       try {
         const res = await axios.post(
-          "http://localhost:3000/product/create",
+          `${API_BASE}/product/create`,
           {
             img,
             name,

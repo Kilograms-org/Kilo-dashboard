@@ -1,5 +1,6 @@
 import { useState, useEffect, useCallback } from "react";
 import axios from "axios";
+import API_BASE from "../src/api.js";
 import Searchbox from "../Components/searchbox";
 import OrderTable from "../Components/OrderTable";
 import Button from "@mui/material/Button";
@@ -14,7 +15,7 @@ function OrderDetails() {
   const fetchOrders = useCallback(async () => {
     try {
       const response = await axios.get(
-        "http://localhost:3000/order/all/admin"
+        `${API_BASE}/order/all/admin`
       );
       const fetched = response.data.orders || [];
       setOrders(fetched);
@@ -37,7 +38,7 @@ function OrderDetails() {
     setSearchLoading(true);
     try {
       const response = await axios.get(
-        `http://localhost:3000/order/search`,
+        `${API_BASE}/order/search`,
         { params: { query } }
       );
       setDisplayedOrders(response.data.orders || []);

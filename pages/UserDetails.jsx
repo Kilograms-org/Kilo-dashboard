@@ -38,7 +38,7 @@ function UserDetails() {
     }
 
     try {
-      const adminKey = localStorage.getItem("adminToken") || "admin-secret-123";
+      const adminKey = localStorage.getItem("adminToken") || import.meta.env.VITE_ADMIN_SECRET_KEY || "admin-secret-123";
 
       const res = await axios.put(
         `${API_BASE}/admin/user/${userId}/toggle-status`,

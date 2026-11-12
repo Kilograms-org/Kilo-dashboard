@@ -69,10 +69,18 @@ function CreateProduct() {
         alert("Product Added successfully");
         setproductcreated(product);
       } catch (e) {
-        console.log("there is some error adding objects ");
-        console.log(e.response?.data || e.message);
+        const errData = e.response?.data;
+        console.log("there is some error adding objects ", errData || e.message);
         console.log(product);
-        alert("There is some error adding product");
+
+        if (errData?.errors) {
+          const failedUrls = errData.errors.map(er => `URL ${er.index + 1}: ${er.error}`).join("\n");
+          alert(`Some images failed to upload:\n${failedUrls}\n\nSuggestions:\n- Use images from public URLs (not blocked CDNs)\n- Try uploading to Imgur or similar first`);
+        } else if (errData?.message) {
+          alert(errData.message);
+        } else {
+          alert("There is some error adding product. Check console for details.");
+        }
       }
     } else {
       alert("Please fill in all required fields");

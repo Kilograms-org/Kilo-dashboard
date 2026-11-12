@@ -9,6 +9,7 @@ import OrderDetails from "./Orderdetails";
 import CreateProduct from "./createproduct";
 import DeleteProduct from "./deleteproduct";
 import UpdateProduct from "./updateproduct";
+import Banners from "./banners";
 
 function Dashboard() {
   const {
@@ -37,6 +38,7 @@ function Dashboard() {
         {rightsidecomponent[5] && <OrderDetails />}
         {rightsidecomponent[6] && <UserDetails />}
         {rightsidecomponent[7] && <DailyTask />}
+        {rightsidecomponent[8] && <Banners />}
       </div>
     </div>
   );

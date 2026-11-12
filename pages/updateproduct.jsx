@@ -34,6 +34,17 @@ function UpdateProduct() {
       const res = await axios.get(`${API_BASE}/product/${productId}`);
       if (res.status === 200) {
         const p = res.data;
+        let categoryname = "";
+        if (p.category) {
+          try {
+            const catRes = await axios.get(
+              `${API_BASE}/category/${p.category}`
+            );
+            categoryname = catRes.data.categoryname || "";
+          } catch (catErr) {
+            console.error("Error fetching category details:", catErr);
+          }
+        }
         setproduct({
           id: productId,
           name: p.name || "",
@@ -43,8 +54,8 @@ function UpdateProduct() {
           producttype: p.producttype || "",
           weight: p.weight || "",
           keyfeatures: p.keyfeatures || "",
-          Instock: p.Instock || "",
-          categoryname: p.category?.name || "",
+          Instock: String(p.Instock ?? ""),
+          categoryname: categoryname,
           img: p.images || ["", "", ""],
           Mrp: p.Mrp || 0,
         });
@@ -56,6 +67,11 @@ function UpdateProduct() {
   };
 
   async function updateallprodycts() {
+    if (!product.categoryname) {
+      alert("Please select a category before updating the product");
+      return;
+    }
+
     try {
       const res = await axios.put(
         `${API_BASE}/product/update/${product.id}`,

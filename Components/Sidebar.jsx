@@ -7,6 +7,7 @@ import { FaUser } from "react-icons/fa";
 import { FaAdversal } from "react-icons/fa";
 import { Link } from "react-router-dom";
 import { FaTasks } from "react-icons/fa";
+import { FaImages } from "react-icons/fa";
 import Button from "@mui/material/Button";
 import { MdSpaceDashboard } from "react-icons/md";
 import { useContext } from "react";
@@ -134,6 +135,17 @@ function Sidebar() {
               </li>
             </ul>
           </div>
+        </li>
+        <li>
+          <Button className="w-100">
+            <span className="icon">
+              <FaImages />
+            </span>
+            <Link to="/dashboard" onClick={() => renderrightcomponent(8)}>
+              Banners
+            </Link>
+            <span className="arrow"></span>
+          </Button>
         </li>
         <li>
           <Button className="w-100">

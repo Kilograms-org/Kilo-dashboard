@@ -9,86 +9,82 @@ import Button from "@mui/material/Button";
 function ProductDetails() {
   const { noofproducts, setnoofproducts } = useContext(Mycontext);
 
-  const [products, setproducts] = useState([""]);
+  const [products, setproducts] = useState([]);
   const [categories, setcategories] = useState([]);
   const [selectedCategory, setselectedCategory] = useState(null);
   const [searchQuery, setSearchQuery] = useState("");
   const [searchLoading, setSearchLoading] = useState(false);
+  const [loading, setLoading] = useState(true);
 
-  const enrichWithCategory = async (productList) => {
-    return Promise.all(
-      productList.map(async (prod) => {
-        try {
-          const catres = await axios.get(
-            `${API_BASE}/category/${prod.category}`
-          );
-          return {
-            ...prod,
-            categoryname: catres.data.categoryname,
-          };
-        } catch (err) {
-          console.log("Error fetching category", err);
-          return { ...prod, categoryname: "Unknown" };
-        }
-      })
+  const enrichWithCategories = (productList, categoryList) => {
+    const categoryMap = new Map(
+      categoryList.map((cat) => [String(cat._id), cat.name])
     );
+
+    return productList.map((prod) => ({
+      ...prod,
+      categoryname: categoryMap.get(String(prod.category)) || "Unknown",
+    }));
   };
 
-  const fetchProducts = async () => {
+  const fetchProductsAndCategories = async () => {
+    setLoading(true);
     try {
-      const res = await axios.get(
-        `${API_BASE}/product/all`
+      const [productsRes, categoriesRes] = await Promise.all([
+        axios.get(`${API_BASE}/product/all`),
+        axios.get(`${API_BASE}/category/all`),
+      ]);
+
+      const categoryList = categoriesRes.data || [];
+      setcategories(categoryList);
+
+      const productList = productsRes.data?.product || [];
+      console.log(productsRes.data?.message);
+      const productsWithCategory = enrichWithCategories(
+        productList,
+        categoryList
       );
-      if (!res.data) {
-        console.log("unable to retrieve products from db");
-      } else {
-        setnoofproducts(res.data.product.length);
-        console.log(res.data.message);
-        const productsWithCategory = await enrichWithCategory(res.data.product);
-        setproducts(productsWithCategory);
-      }
-    } catch (e) {
-      console.log("Issue retrieving number of products");
-    }
-  };
 
-  const fetchCategories = async () => {
-    try {
-      const res = await axios.get(`${API_BASE}/category/all`);
-      if (res.status === 200) {
-        setcategories(res.data);
-      }
-    } catch (error) {
-      console.error("Error fetching categories:", error);
+      setproducts(productsWithCategory);
+      setnoofproducts(productsWithCategory.length);
+    } catch (e) {
+      console.log("Issue retrieving products/categories", e);
+      setproducts([]);
+      setnoofproducts(0);
+    } finally {
+      setLoading(false);
     }
   };
 
   useEffect(() => {
-    fetchProducts();
-    fetchCategories();
+    fetchProductsAndCategories();
   }, []);
 
   const handleStockUpdate = () => {
-    fetchProducts();
+    fetchProductsAndCategories();
   };
 
   const handleSearch = async (query) => {
     setSearchQuery(query);
+
+    if (!query.trim()) {
+      handleClearSearch();
+      return;
+    }
+
     setSearchLoading(true);
     setselectedCategory(null);
     try {
-      const res = await axios.get(
-        `${API_BASE}/product/search`,
-        { params: { q: query } }
+      const res = await axios.get(`${API_BASE}/product/search`, {
+        params: { q: query },
+      });
+      const searchResults = res.data.products || [];
+      const productsWithCategory = enrichWithCategories(
+        searchResults,
+        categories
       );
-      if (res.data.products && res.data.products.length > 0) {
-        const productsWithCategory = await enrichWithCategory(res.data.products);
-        setproducts(productsWithCategory);
-        setnoofproducts(productsWithCategory.length);
-      } else {
-        setproducts([]);
-        setnoofproducts(0);
-      }
+      setproducts(productsWithCategory);
+      setnoofproducts(productsWithCategory.length);
     } catch (error) {
       console.error("Error searching products:", error);
       setproducts([]);
@@ -100,14 +96,15 @@ function ProductDetails() {
 
   const handleClearSearch = () => {
     setSearchQuery("");
-    fetchProducts();
+    fetchProductsAndCategories();
   };
 
   const filteredProducts = selectedCategory
     ? products.filter((p) => p.categoryname === selectedCategory)
     : products;
 
-  const isLoading = filteredProducts.length === 0 || (filteredProducts.length === 1 && filteredProducts[0] === "");
+  const showNoProducts =
+    !loading && !searchLoading && filteredProducts.length === 0;
 
   return (
     <>
@@ -132,10 +129,12 @@ function ProductDetails() {
                 Clear Search
               </Button>
             )}
-            {searchLoading && (
-              <p style={{ textAlign: "center" }}>Searching...</p>
+            {(loading || searchLoading) && (
+              <p style={{ textAlign: "center" }}>
+                {searchLoading ? "Searching..." : "Loading products..."}
+              </p>
             )}
-            {isLoading && !searchLoading && (
+            {showNoProducts && (
               <p style={{ textAlign: "center" }}>No products found</p>
             )}
             <div className="category-filters" style={{ marginTop: "15px", marginBottom: "15px", display: "flex", flexWrap: "wrap", gap: "8px" }}>
@@ -157,7 +156,7 @@ function ProductDetails() {
                 </Button>
               ))}
             </div>
-            {!isLoading && !searchLoading && (
+            {!loading && !searchLoading && filteredProducts.length > 0 && (
               <ProductTable products={filteredProducts} onStockUpdate={handleStockUpdate} />
             )}
           </div>
